@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>שיעורים פרטיים | עופר</title>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300;400;700;900&family=Heebo:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #faf8f3;
+    --ink: #1a1a1a;
+    --ink-light: #555;
+    --line: rgba(0,0,0,0.08);
+    --mark-yellow: #ffd43b;
+    --mark-green: #4cd97b;
+    --mark-pink: rgba(232, 67, 147, 0.55);
+    --mark-blue: #5ab0f5;
+  }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Heebo', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Notebook lines background */
+  .notebook-bg {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: repeating-linear-gradient(
+      transparent,
+      transparent 31px,
+      var(--line) 31px,
+      var(--line) 32px
+    );
+    background-size: 100% 32px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 420px;
+    margin: 0 auto;
+    padding: 32px 24px 48px;
+  }
+
+  /* Header section */
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 16px;
+    opacity: 0;
+    transform: translateY(-16px);
+    animation: fadeUp 0.6s ease forwards 0.95s;
+  }
+
+  .photo-wrap {
+    flex-shrink: 0;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--ink);
+    box-shadow: 3px 3px 0 var(--ink);
+  }
+
+  .photo-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .header-text h1 {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-weight: 900;
+    font-size: 1.5rem;
+    line-height: 1.2;
+  }
+
+  .header-text .sub {
+    font-size: 0.82rem;
+    color: var(--ink-light);
+    margin-top: 3px;
+    font-weight: 400;
+  }
+
+  /* Main headline */
+  .headline {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-weight: 700;
+    font-size: 1.7rem;
+    line-height: 2rem;
+    margin-bottom: 16px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.25s;
+  }
+
+  /* Marker highlight */
+  .mark {
+    position: relative;
+    display: inline;
+    white-space: nowrap;
+  }
+  .mark::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    height: 60%;
+    border-radius: 2px;
+    z-index: -1;
+    transform: scaleX(0);
+    transform-origin: right;
+  }
+  .mark.y::before { background: var(--mark-yellow); }
+  .mark.g::before { background: var(--mark-green); }
+  .mark.p::before { background: var(--mark-pink); }
+  .mark.b::before { background: var(--mark-blue); }
+
+  .mark.animate::before {
+    animation: markReveal 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  @keyframes markReveal {
+    to { transform: scaleX(1); }
+  }
+
+  /* Intro paragraph */
+  .intro {
+    font-size: 1.05rem;
+    line-height: 1.55;
+    color: #333;
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.4s;
+    font-weight: 400;
+  }
+
+  .no-bagrut {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-weight: 900;
+    font-size: 1.15rem;
+  }
+
+  /* Services */
+  .services {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .service-item {
+    opacity: 0;
+    transform: translateX(20px);
+    margin-bottom: 4px;
+  }
+
+  .service-item.animate {
+    animation: slideIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  .service-title {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    display: inline;
+  }
+
+  .service-desc {
+    font-size: 0.9rem;
+    color: #444;
+    line-height: 1.65;
+    margin-top: 3px;
+  }
+
+  /* Subjects chips */
+  .subjects-wrap {
+    margin-bottom: 36px;
+    opacity: 0;
+    animation: fadeUp 0.6s forwards 0.75s;
+  }
+
+  .subjects-label {
+    font-size: 0.78rem;
+    color: var(--ink-light);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .chip {
+    padding: 5px 13px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border: 1.5px solid rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .chip::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: scaleX(0);
+    transform-origin: right;
+    z-index: -1;
+  }
+
+  .chip.animate::before {
+    animation: markReveal 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  .chip.y::before { background: var(--mark-yellow); }
+  .chip.g::before { background: var(--mark-green); }
+  .chip.p::before { background: var(--mark-pink); }
+  .chip.b::before { background: var(--mark-blue); }
+
+  /* Closing line */
+  .closing {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: 1.05rem;
+    font-weight: 400;
+    line-height: 1.45;
+    color: #444;
+    margin-bottom: 28px;
+    border-right: 3px solid var(--ink);
+    padding-right: 14px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.9s;
+  }
+
+  /* CTA */
+  .cta-wrap {
+    text-align: center;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 1.0s;
+  }
+
+  /* Header when moved to bottom */
+  .header.bottom {
+    margin-bottom: 16px;
+    margin-top: 0;
+  }
+
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 20px;
+    background: var(--ink);
+    color: white;
+    border-radius: 50px;
+    font-family: 'Heebo', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 500;
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.3);
+  }
+
+  .cta-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+  }
+
+  .zoom-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 12px;
+    font-size: 0.8rem;
+    color: var(--ink-light);
+  }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0) translateX(0); }
+  }
+
+  @keyframes slideIn {
+    to { opacity: 1; transform: translateX(0); }
+  }
+</style>
+</head>
+<body>
+<div class="notebook-bg"></div>
+
+<div class="container">
+
+  <div class="headline">
+    הכנה לבגרויות לא חייבת<br>להיות <span class="mark y" id="m1">סיוט.</span>
+  </div>
+
+  <div class="intro">
+    רוב תשומת הלב הולכת למתמטיקה ואנגלית, אבל בלי מקצועות החובה ההומניים, <span class="mark y no-bagrut">פשוט אין תעודת בגרות.</span><br><br>
+    מ-15 שנות עבודה עם בני נוער למדתי שעם סדר, גישה נכונה והכוונה מקצועית, הלמידה הופכת הרבה יותר רגועה. ומובילה לתוצאות.
+  </div>
+
+  <div class="subjects-wrap">
+    <div class="subjects-label">מלווה תלמידים ב-4 מקצועות החובה</div>
+    <div class="chips" id="chips">
+      <div class="chip y">היסטוריה</div>
+      <div class="chip g">אזרחות</div>
+      <div class="chip p">תנ"ך</div>
+      <div class="chip b">ספרות</div>
+    </div>
+  </div>
+
+  <div class="services" id="services">
+    <div class="service-item">
+      <div><span class="service-title"><span class="mark y">הכנה ממוקדת לבגרויות</span></span></div>
+      <div class="service-desc">מעבר יסודי על החומר, סגירת פערים והשלמת משימות. עושים סדר, גם אם נשאר מעט זמן.</div>
+    </div>
+    <div class="service-item">
+      <div><span class="service-title"><span class="mark p">ליווי בכתיבת עבודות</span></span></div>
+      <div class="service-desc">מבחירת נושא ועד הגשה סופית, עבודה צמודה ומשותפת.</div>
+    </div>
+    <div class="service-item">
+      <div><span class="service-title"><span class="mark g">חיזוק לתלמידי חטיבה</span></span></div>
+      <div class="service-desc">בניית הרגלי למידה נכונים וסגירת פערים לפני המעבר לתיכון.</div>
+    </div>
+  </div>
+
+  <div class="closing">
+    אם הילד מתקשה, הולך לאיבוד מול החומר,<br>
+    או פשוט צריך מישהו שיעשה לו סדר,<br>
+    <strong>בואו נדבר.</strong>
+  </div>
+
+  <div class="header">
+    <div class="photo-wrap">
+      <img src="ofer.jpg" alt="עופר חרמש">
+    </div>
+    <div class="header-text">
+      <h1>עופר חרמש</h1>
+      <div class="sub">מורה | תואר שני בהיסטוריה<br>15 שנות ניסיון בהוראה</div>
+    </div>
+  </div>
+
+  <div class="cta-wrap">
+    <a href="https://wa.me/972528011281" class="cta-btn">
+      <span>💬</span>
+      <span>לפרטים ותיאום שיעור ראשון</span>
+    </a>
+    <div class="zoom-badge">
+      <span>💻</span>
+      <span>שיעורים בזום · לכל הארץ</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // Intersection observer for scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+
+  // Markers
+  document.querySelectorAll('.mark').forEach((el, i) => {
+    setTimeout(() => el.classList.add('animate'), 700 + i * 200);
+  });
+
+  // Service cards with stagger
+  document.querySelectorAll('.service-item').forEach((el, i) => {
+    el.style.animationDelay = `${0.5 + i * 0.12}s`;
+    observer.observe(el);
+  });
+
+  // Chips with stagger
+  document.querySelectorAll('.chip').forEach((el, i) => {
+    el.style.animationDelay = `${i * 0.1}s`;
+    setTimeout(() => observer.observe(el), 100);
+  });
+</script>
+</body>
+</html>

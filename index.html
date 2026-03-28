@@ -22,6 +22,7 @@
     --mark-green: #4cd97b;
     --mark-pink: rgba(232, 67, 147, 0.55);
     --mark-blue: #5ab0f5;
+    --mark-coral: #ff9a7b;
   }
 
   body {
@@ -33,7 +34,6 @@
     overflow-x: hidden;
   }
 
-  /* Notebook lines background */
   .notebook-bg {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
@@ -56,7 +56,6 @@
     padding: 32px 24px 48px;
   }
 
-  /* Header section */
   .header {
     display: flex;
     align-items: center;
@@ -98,7 +97,6 @@
     font-weight: 400;
   }
 
-  /* Main headline */
   .headline {
     font-family: 'Frank Ruhl Libre', serif;
     font-weight: 700;
@@ -109,7 +107,6 @@
     animation: fadeUp 0.6s ease forwards 0.25s;
   }
 
-  /* Marker highlight */
   .mark {
     position: relative;
     display: inline;
@@ -131,6 +128,7 @@
   .mark.g::before { background: var(--mark-green); }
   .mark.p::before { background: var(--mark-pink); }
   .mark.b::before { background: var(--mark-blue); }
+  .mark.c::before { background: var(--mark-coral); }
 
   .mark.animate::before {
     animation: markReveal 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
@@ -140,7 +138,6 @@
     to { transform: scaleX(1); }
   }
 
-  /* Intro paragraph */
   .intro {
     font-size: 1.05rem;
     line-height: 1.55;
@@ -157,7 +154,6 @@
     font-size: 1.15rem;
   }
 
-  /* Services */
   .services {
     display: flex;
     flex-direction: column;
@@ -189,7 +185,6 @@
     margin-top: 3px;
   }
 
-  /* Subjects chips */
   .subjects-wrap {
     margin-bottom: 36px;
     opacity: 0;
@@ -200,14 +195,15 @@
     font-size: 1rem;
     color: var(--ink-light);
     margin-bottom: 8px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.01em;
+    line-height: 1.5;
   }
 
   .chips {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
+    margin-top: 10px;
   }
 
   .chip {
@@ -237,8 +233,8 @@
   .chip.g::before { background: var(--mark-green); }
   .chip.p::before { background: var(--mark-pink); }
   .chip.b::before { background: var(--mark-blue); }
+  .chip.c::before { background: var(--mark-coral); }
 
-  /* Closing line */
   .closing {
     font-family: 'Frank Ruhl Libre', serif;
     font-size: 1.05rem;
@@ -252,7 +248,6 @@
     animation: fadeUp 0.6s ease forwards 0.9s;
   }
 
-  /* CTA */
   .cta-wrap {
     text-align: center;
     opacity: 0;
@@ -312,13 +307,13 @@
 
   <div class="intro">
     רוב תשומת הלב הולכת למתמטיקה ואנגלית, אבל בלי מקצועות החובה ההומניים, <span class="mark y no-bagrut">פשוט אין תעודת בגרות.</span><br><br>
-    מ-15 שנות עבודה עם בני נוער למדתי שעם סדר, גישה נכונה והכוונה מקצועית, הלמידה הופכת הרבה יותר רגועה. ומובילה לתוצאות.
+    מ-20 שנות ניסיון בעבודה עם בני נוער למדתי שעם סדר, גישה נכונה והכוונה מקצועית, הלמידה הופכת הרבה יותר רגועה. ומובילה לתוצאות.
   </div>
 
   <div class="subjects-wrap">
-    <div class="subjects-label">מלווה תלמידים בארבעת מקצועות החובה</div>
+    <div class="subjects-label">מלווה תלמידים בארבעת מקצועות החובה<br>בשיעורי זום אישיים לכל חלקי הארץ</div>
     <div class="chips" id="chips">
-      <div class="chip y">היסטוריה</div>
+      <div class="chip c">היסטוריה</div>
       <div class="chip g">אזרחות</div>
       <div class="chip p">תנ"ך</div>
       <div class="chip b">ספרות</div>
@@ -331,11 +326,11 @@
       <div class="service-desc">מעבר יסודי על החומר, סגירת פערים והשלמת משימות. עושים סדר, גם אם נשאר מעט זמן.</div>
     </div>
     <div class="service-item">
-      <div><span class="service-title"><span class="mark p">ליווי בכתיבת עבודות</span></span></div>
+      <div><span class="service-title"><span class="mark y">ליווי בכתיבת עבודות</span></span></div>
       <div class="service-desc">מבחירת נושא ועד הגשה סופית, עבודה צמודה ומשותפת.</div>
     </div>
     <div class="service-item">
-      <div><span class="service-title"><span class="mark g">חיזוק לתלמידי חטיבה</span></span></div>
+      <div><span class="service-title"><span class="mark y">חיזוק לתלמידי חטיבה</span></span></div>
       <div class="service-desc">בניית הרגלי למידה נכונים וסגירת פערים לפני המעבר לתיכון.</div>
     </div>
   </div>
@@ -370,7 +365,6 @@
 </div>
 
 <script>
-  // Intersection observer for scroll animations
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -380,18 +374,15 @@
     });
   }, { threshold: 0.2 });
 
-  // Markers
   document.querySelectorAll('.mark').forEach((el, i) => {
     setTimeout(() => el.classList.add('animate'), 700 + i * 200);
   });
 
-  // Service cards with stagger
   document.querySelectorAll('.service-item').forEach((el, i) => {
     el.style.animationDelay = `${0.5 + i * 0.12}s`;
     observer.observe(el);
   });
 
-  // Chips with stagger
   document.querySelectorAll('.chip').forEach((el, i) => {
     el.style.animationDelay = `${i * 0.1}s`;
     setTimeout(() => observer.observe(el), 100);

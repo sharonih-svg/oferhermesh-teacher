@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ליווי אקדמי לסטודנטים | עופר חרמש</title>
+<meta property="og:title" content="עופר חרמש - ליווי אקדמי לסטודנטים">
+<meta property="og:description" content="ליווי אקדמי לסטודנטים במדעי הרוח, מדעי החברה, חינוך ותחומים משיקים - כתיבה אקדמית, סמינריונים והכנה למבחנים">
+<meta property="og:url" content="">
+<meta property="og:type" content="website">
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300;400;700;900&family=Heebo:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #faf8f3;
+    --ink: #1a1a1a;
+    --ink-light: #3d3d3d;
+    --line: rgba(0,0,0,0.04);
+    --mark-yellow: #ffd43b;
+    --mark-green: #4cd97b;
+    --mark-pink: rgba(232, 67, 147, 0.55);
+    --mark-blue: #5ab0f5;
+    --mark-coral: #ff9a7b;
+  }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Heebo', sans-serif;
+    font-weight: 400;
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .notebook-bg {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: repeating-linear-gradient(
+      transparent,
+      transparent 31px,
+      var(--line) 31px,
+      var(--line) 32px
+    );
+    background-size: 100% 32px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    max-width: 420px;
+    margin: 0 auto;
+    padding: 54px 24px 48px;
+  }
+
+  /* ===== marker highlight ===== */
+  .mark {
+    position: relative;
+    display: inline;
+    white-space: nowrap;
+  }
+  .mark::before {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    right: 0;
+    left: 0;
+    height: 50%;
+    border-radius: 2px;
+    z-index: -1;
+    transform: scaleX(0);
+    transform-origin: right;
+  }
+  .mark.y::before { background: var(--mark-yellow); }
+  .mark.g::before { background: var(--mark-green); }
+  .mark.p::before { background: var(--mark-pink); }
+  .mark.b::before { background: var(--mark-blue); }
+  .mark.c::before { background: var(--mark-coral); }
+  .mark.animate::before { animation: markReveal 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+
+  @keyframes markReveal { to { transform: scaleX(1); } }
+
+  /* ===== headline + intro ===== */
+  .headline {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-weight: 700;
+    font-size: 1.7rem;
+    line-height: 2.1rem;
+    margin-bottom: 14px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.25s;
+  }
+
+  .intro {
+    font-size: 1.12rem;
+    line-height: 1.7;
+    color: #2a2a2a;
+    margin-bottom: 30px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease forwards 0.6s;
+    font-weight: 400;
+  }
+
+
+  /* ===== fields + chips ===== */
+  .subjects-wrap {
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.6s forwards 0.42s;
+  }
+
+
+  .chips {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: clamp(3px, 1.4vw, 7px);
+    margin-top: 10px;
+  }
+
+  .chip {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    padding: 5px clamp(6px, 2.4vw, 13px);
+    border-radius: 20px;
+    font-size: clamp(0.68rem, 3.1vw, 0.85rem);
+    font-weight: 500;
+    border: 1.5px solid rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .chip::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: scaleX(0);
+    transform-origin: right;
+    z-index: -1;
+  }
+  .chip.animate::before { animation: markReveal 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+  .chip.y::before { background: var(--mark-yellow); }
+  .chip.g::before { background: var(--mark-green); }
+  .chip.p::before { background: var(--mark-pink); }
+  .chip.b::before { background: var(--mark-blue); }
+  .chip.c::before { background: var(--mark-coral); }
+
+  /* ===== services ===== */
+  .services {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 34px;
+  }
+
+  .service-item {
+    opacity: 0;
+    transform: translateX(20px);
+    margin-bottom: 4px;
+  }
+  .service-item.animate { animation: slideIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+
+  .service-title {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-weight: 700;
+    font-size: 1.7rem;
+    display: inline;
+  }
+
+  .service-desc {
+    font-size: 1.1rem;
+    color: #333;
+    line-height: 1.7;
+    margin-top: 4px;
+  }
+
+  /* ===== about block ===== */
+  .about {
+    margin-bottom: 32px;
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  .about.animate { animation: slideIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+
+  .about-title {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-weight: 700;
+    font-size: 1.7rem;
+    display: inline;
+    margin-bottom: 12px;
+  }
+
+  .about-list {
+    list-style: none;
+    margin-top: 14px;
+  }
+
+  .about-list li {
+    position: relative;
+    padding-right: 18px;
+    margin-bottom: 10px;
+    font-size: 1.08rem;
+    line-height: 1.6;
+    color: #333;
+  }
+
+  .about-list li::before {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0.62em;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--ink);
+  }
+
+  /* ===== closing quote ===== */
+  .closing {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 28px;
+    border-right: 3px solid var(--ink);
+    padding-right: 14px;
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  .closing.animate { animation: slideIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+
+  /* ===== profile ===== */
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  .header.animate { animation: slideIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+
+  .photo-wrap {
+    flex-shrink: 0;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--ink);
+    box-shadow: 3px 3px 0 var(--ink);
+  }
+
+  .photo-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .header-text h1 {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-weight: 900;
+    font-size: 1.5rem;
+    line-height: 1.2;
+  }
+
+  .header-text .sub {
+    font-size: 0.95rem;
+    color: var(--ink-light);
+    margin-top: 4px;
+    font-weight: 400;
+    line-height: 1.5;
+  }
+
+  /* ===== CTA ===== */
+  .cta-wrap {
+    text-align: center;
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  .cta-wrap.animate { animation: slideIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 24px;
+    background: var(--ink);
+    color: white;
+    border-radius: 50px;
+    font-family: 'Heebo', sans-serif;
+    font-size: 1.02rem;
+    font-weight: 500;
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.3);
+  }
+
+  .cta-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 1px 1px 0 rgba(0,0,0,0.3);
+  }
+
+  .cta-btn:focus-visible {
+    outline: 3px solid var(--mark-yellow);
+    outline-offset: 3px;
+  }
+
+  .where {
+    margin-top: 16px;
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: 1.08rem;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+
+  .values {
+    margin-top: 10px;
+    font-size: 0.95rem;
+    color: var(--ink-light);
+    letter-spacing: 0.02em;
+  }
+
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0) translateX(0); } }
+  @keyframes slideIn { to { opacity: 1; transform: translateX(0); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    .headline, .intro, .subjects-wrap, .services, .service-item,
+    .about, .closing, .header, .cta-wrap {
+      opacity: 1;
+      transform: none;
+    }
+    .mark::before, .chip::before { transform: scaleX(1); }
+  }
+</style>
+</head>
+<body>
+<div class="notebook-bg"></div>
+
+<div class="container">
+
+  <div class="headline">
+    <span class="mark y">ליווי אקדמי לסטודנטים</span>
+  </div>
+
+  <div class="subjects-wrap">
+    <div class="chips" id="chips">
+      <div class="chip c">מדעי הרוח</div>
+      <div class="chip g">מדעי החברה</div>
+      <div class="chip p">חינוך</div>
+      <div class="chip b">תחומים משיקים</div>
+    </div>
+  </div>
+
+  <div class="intro">
+    מתוך ניסיון אקדמי בישראל ובחו"ל ושנים של ליווי סטודנטים, למדתי שעם סדר, שיטה וליווי צמוד, זה נהיה הרבה יותר פשוט.
+  </div>
+
+  <div class="services" id="services">
+    <div class="service-item">
+      <div><span class="service-title"><span class="mark y">כתיבה אקדמית וסמינריונים</span></span></div>
+      <div class="service-desc">ליווי בכל תהליך הכתיבה — מבחירת הנושא, דרך בניית הטיעון והמבנה, ועד הניסוח וההגשה.</div>
+    </div>
+    <div class="service-item">
+      <div><span class="service-title"><span class="mark y">הכנה למבחנים</span></span></div>
+      <div class="service-desc">מיפוי החומר, תרגול ממוקד ובניית לוח זמנים שמחזיק עד מועד הבחינה.</div>
+    </div>
+    <div class="service-item">
+      <div><span class="service-title"><span class="mark y">הבנת מאמרים וארגון חומר</span></span></div>
+      <div class="service-desc">לפרק טקסטים אקדמיים כבדים לשפה ברורה, לסדר את החומר ולהגיע מוכנים להגשות.</div>
+    </div>
+    <div class="service-item">
+      <div><span class="service-title"><span class="mark y">ליווי אישי לאורך כל הדרך</span></span></div>
+      <div class="service-desc">לא שיעור בודד, אלא מישהי שמכירה את הקורס, את הקצב ואת מה שעובד בשבילכם.</div>
+    </div>
+  </div>
+
+  <div class="about" id="about">
+    <div><span class="about-title"><span class="mark g">קצת עליי</span></span></div>
+    <ul class="about-list">
+      <li>תואר שני (M.A.) בהיסטוריה של עם ישראל</li>
+      <li>תואר ראשון בהיסטוריה ובפסיכולוגיה</li>
+      <li>תעודת הוראה וותק במשרד החינוך</li>
+      <li>ניסיון אקדמי בישראל ובחו"ל, כולל תוכנית חילופי סטודנטים באוניברסיטת טורונטו</li>
+      <li>ניסיון רב בליווי סטודנטים, בהוראה ובהנחיה אישית</li>
+    </ul>
+  </div>
+
+  <div class="closing">
+    אם אתם תקועים מול מאמר, לחוצים לקראת הגשה,<br>
+    או פשוט צריכים מישהי שתעשה סדר,<br>
+    <strong>בואו נדבר.</strong>
+  </div>
+
+  <div class="header">
+    <div class="photo-wrap">
+<img src="/ofer.jpeg" alt="עופר חרמש">
+    </div>
+    <div class="header-text">
+      <h1>עופר חרמש</h1>
+      <div class="sub">מורה ומלווה אקדמית<br>תואר שני בהיסטוריה</div>
+    </div>
+  </div>
+
+  <div class="cta-wrap">
+    <a href="https://wa.me/972528011282" class="cta-btn">
+      <span>💬</span>
+      <span>לפרטים ותיאום פגישה ראשונה</span>
+    </a>
+    <div class="where">
+      בזום · מכל מקום בארץ<br>
+      או פרונטלית באזור נהריה והגליל המערבי
+    </div>
+    <div class="values">מקצועיות · יחס אישי · סבלנות · זמינות</div>
+  </div>
+
+</div>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+
+  // markers reveal as they come into view, with a light stagger per group
+  document.querySelectorAll('.mark').forEach((el) => observer.observe(el));
+
+  document.querySelectorAll('.service-item').forEach((el, i) => {
+    el.style.animationDelay = `${i * 0.1}s`;
+    observer.observe(el);
+  });
+
+  document.querySelectorAll('.chip').forEach((el, i) => {
+    el.style.animationDelay = `${i * 0.1}s`;
+    setTimeout(() => observer.observe(el), 100);
+  });
+
+  ['#about', '.closing', '.header', '.cta-wrap'].forEach(sel => {
+    const el = document.querySelector(sel);
+    if (el) observer.observe(el);
+  });
+</script>
+</body>
+</html>

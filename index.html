@@ -2,7 +2,7 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>שיעורים פרטיים | עופר</title>
 <meta property="og:title" content="עופר חרמש - שיעורים פרטיים והכנה לבגרויות">
 <meta property="og:description" content="מלווה תלמידים בחטיבת ביניים ותיכונים במקצועות החובה - אזרחות | היסטוריה | תנך | ספרות">
@@ -16,8 +16,8 @@
   :root {
     --cream: #faf8f3;
     --ink: #1a1a1a;
-    --ink-light: #555;
-    --line: rgba(0,0,0,0.08);
+    --ink-light: #3d3d3d;
+    --line: rgba(0,0,0,0.04);
     --mark-yellow: #ffd43b;
     --mark-green: #4cd97b;
     --mark-pink: rgba(232, 67, 147, 0.55);
@@ -29,7 +29,9 @@
     background: var(--cream);
     color: var(--ink);
     font-family: 'Heebo', sans-serif;
-    font-weight: 300;
+    font-weight: 400;
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
     min-height: 100vh;
     overflow-x: hidden;
   }
@@ -91,17 +93,18 @@
   }
 
   .header-text .sub {
-    font-size: 0.82rem;
+    font-size: 0.95rem;
     color: var(--ink-light);
-    margin-top: 3px;
+    margin-top: 4px;
     font-weight: 400;
+    line-height: 1.5;
   }
 
   .headline {
     font-family: 'Frank Ruhl Libre', serif;
     font-weight: 700;
     font-size: 1.7rem;
-    line-height: 2rem;
+    line-height: 2.1rem;
     margin-bottom: 16px;
     opacity: 0;
     animation: fadeUp 0.6s ease forwards 0.25s;
@@ -139,9 +142,9 @@
   }
 
   .intro {
-    font-size: 1.05rem;
-    line-height: 1.55;
-    color: #333;
+    font-size: 1.12rem;
+    line-height: 1.7;
+    color: #2a2a2a;
     margin-bottom: 28px;
     opacity: 0;
     animation: fadeUp 0.6s ease forwards 0.4s;
@@ -151,7 +154,7 @@
   .no-bagrut {
     font-family: 'Frank Ruhl Libre', serif;
     font-weight: 900;
-    font-size: 1.15rem;
+    font-size: 1.22rem;
   }
 
   .services {
@@ -179,10 +182,10 @@
   }
 
   .service-desc {
-    font-size: 1.05rem;
-    color: #444;
-    line-height: 1.65;
-    margin-top: 3px;
+    font-size: 1.1rem;
+    color: #333;
+    line-height: 1.7;
+    margin-top: 4px;
   }
 
   .subjects-wrap {
@@ -192,11 +195,12 @@
   }
 
   .subjects-label {
-    font-size: 1rem;
+    font-size: 1.05rem;
     color: var(--ink-light);
     margin-bottom: 8px;
     letter-spacing: 0.01em;
-    line-height: 1.5;
+    line-height: 1.6;
+    font-weight: 400;
   }
 
   .chips {
@@ -207,9 +211,9 @@
   }
 
   .chip {
-    padding: 5px 13px;
+    padding: 6px 15px;
     border-radius: 20px;
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     font-weight: 500;
     border: 1.5px solid rgba(0,0,0,0.1);
     position: relative;
@@ -237,10 +241,10 @@
 
   .closing {
     font-family: 'Frank Ruhl Libre', serif;
-    font-size: 1.05rem;
+    font-size: 1.1rem;
     font-weight: 400;
-    line-height: 1.45;
-    color: #444;
+    line-height: 1.6;
+    color: #333;
     margin-bottom: 28px;
     border-right: 3px solid var(--ink);
     padding-right: 14px;
@@ -259,12 +263,12 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
-    padding: 12px 20px;
+    padding: 14px 24px;
     background: var(--ink);
     color: white;
     border-radius: 50px;
     font-family: 'Heebo', sans-serif;
-    font-size: 0.92rem;
+    font-size: 1.02rem;
     font-weight: 500;
     text-decoration: none;
     letter-spacing: 0.01em;
@@ -277,14 +281,19 @@
     box-shadow: 1px 1px 0 rgba(0,0,0,0.3);
   }
 
-.zoom-badge {
+  .cta-btn:focus-visible {
+    outline: 3px solid var(--mark-yellow);
+    outline-offset: 3px;
+  }
+
+  .zoom-badge {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
     margin-top: 16px;
     font-family: 'Frank Ruhl Libre', serif;
-    font-size: 1.05rem;
+    font-size: 1.08rem;
     font-weight: 700;
     color: var(--ink);
   }
@@ -295,6 +304,19 @@
 
   @keyframes slideIn {
     to { opacity: 1; transform: translateX(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    .headline, .intro, .subjects-wrap, .closing, .header, .cta-wrap, .service-item {
+      opacity: 1;
+      transform: none;
+    }
+    .mark::before, .chip::before { transform: scaleX(1); }
   }
 </style>
 </head>
